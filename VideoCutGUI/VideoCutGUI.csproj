@@ -102,13 +102,13 @@
     <Compile Include="frmErr.Designer.cs">
       <DependentUpon>frmErr.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helper.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmErr.resx">
