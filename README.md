@@ -6,7 +6,9 @@ Tegu 视频切割工具（Tegu Video Cut）是TeguCV 的一个配套工具，用
 ## 快速开始
 本项目提供了解决方案文件，安装 Visual Studio 2017 即可打开并运行。项目依赖于[OpenCVSharp](https://github.com/shimat/opencvsharp)，需要使用Nuget安装。
 
-之后会提供编译好的Release版本。
+您也可以直接使用已经编译好的版本：
+[release](https://github.com/generalized-intelligence/Tegu-VideoCutter/releases)
+
 
 
 ## 现有功能
