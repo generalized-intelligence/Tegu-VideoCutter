@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>450</height>
+    <height>459</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,6 +34,9 @@
           <widget class="QRadioButton" name="rdb1">
            <property name="text">
             <string>1s per image</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -197,7 +200,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>17</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
