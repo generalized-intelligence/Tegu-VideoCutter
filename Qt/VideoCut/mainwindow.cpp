@@ -18,7 +18,10 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+void MainWindow::Video_file_update(QString filename)
+{
 
+}
 void MainWindow::on_btnFile_clicked()
 {
     clear_file();
@@ -42,4 +45,10 @@ void MainWindow::on_btnFile_clicked()
         ui->lblNumber->setText(num+" Files Selected");
     }
 
+}
+
+void MainWindow::on_rdbOneFolder_toggled(bool checked)
+{
+    conf.all_save=checked;
+    qDebug()<<conf.all_save;
 }

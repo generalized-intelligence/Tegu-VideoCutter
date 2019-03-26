@@ -23,6 +23,8 @@ public:
 
 private slots:
     void on_btnFile_clicked();
+    void Video_file_update(QString filename);
+    void on_rdbOneFolder_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;

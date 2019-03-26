@@ -28,12 +28,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     helper.cpp \
-    config.cpp
+    config.cpp \
+    backgroundworker.cpp
 
 HEADERS += \
         mainwindow.h \
     helper.h \
-    config.h
+    config.h \
+    backgroundworker.h
 
 FORMS += \
         mainwindow.ui
