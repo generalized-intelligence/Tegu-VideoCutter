@@ -3,6 +3,7 @@
 #include<QString>
 #include<QVector>
 #include<QException>
+
 struct config
 {
     config();

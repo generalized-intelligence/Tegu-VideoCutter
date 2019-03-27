@@ -52,3 +52,38 @@ void MainWindow::on_rdbOneFolder_toggled(bool checked)
     conf.all_save=checked;
     qDebug()<<conf.all_save;
 }
+
+void MainWindow::on_btnFolder_clicked()
+{
+    clear_file();
+    QString folder_path=QFileDialog::getExistingDirectory (this, "Select the folder to open","./" );
+    qDebug()<<folder_path;
+    if(folder_path.length()!=0)
+    {
+        try {
+            ui->lblNumber->setText("Searching Files");
+            GetFile(folder_path,conf.file_to_work);
+        } catch (QException e) {
+            QMessageBox::information(this,"Error","Failed to search the path:"+folder_path);
+            ui->lblNumber->setText("Searching Files Failed");
+            return;
+        }
+
+    }
+    foreach(QString file,conf.file_to_work)
+    {
+        qDebug()<<file;
+    }
+
+}
+
+void MainWindow::on_btnPath_clicked()
+{
+
+}
+
+
+void MainWindow::on_btnStop_clicked()
+{
+
+}

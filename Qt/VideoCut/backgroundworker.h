@@ -8,6 +8,7 @@ class BackgroundWorker : public QThread
 {
 signals:
     void one_file_finished(QString filename);
+    void all_finished();
 public:
     BackgroundWorker(QObject* parent);
     void start_cut_videos(QVector<QString>* filelist);
