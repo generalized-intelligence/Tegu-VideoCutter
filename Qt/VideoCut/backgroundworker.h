@@ -4,14 +4,20 @@
 #include <QDialog>
 #include <QString>
 #include <QVector>
-class BackgroundWorker : public QThread
+#include <QException>
+#include "helper.h"
+class BackgroundWorker : public QObject
 {
+    Q_OBJECT
 signals:
-    void one_file_finished(QString filename);
-    void all_finished();
+    void one_video_file_finished(QString filename);
+    void all_finished(bool is_video=false);
+    void error(QException e,bool is_video=false);
 public:
-    BackgroundWorker(QObject* parent);
-    void start_cut_videos(QVector<QString>* filelist);
+    BackgroundWorker();
+public slots:
+    void cut_videos(QVector<QString>& filelist);
+    void search_files(QString path,QVector<QString>& file_list);
 
 };
 

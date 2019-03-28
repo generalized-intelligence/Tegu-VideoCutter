@@ -4,10 +4,12 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QThread>
 #include <QDebug>
 #include<memory>
 #include "config.h"
 #include "helper.h"
+#include "backgroundworker.h"
 using std::shared_ptr;
 using std::make_shared;
 namespace Ui {
@@ -17,7 +19,8 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
+signals:
+    void start_searching_files(QString path,QVector<QString>& file_list);
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -34,12 +37,15 @@ private slots:
 
 
     void on_btnStop_clicked();
+    void job_finished(bool isVideo=false);
+    void video_finish_list_update(QString file_name);
+    void got_error(QException e,bool isVideo);
 
 private:
     Ui::MainWindow *ui;
     config conf;
-
-
+    QThread *thread;
+    BackgroundWorker *worker;
 };
 
 #endif // MAINWINDOW_H

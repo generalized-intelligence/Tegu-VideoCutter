@@ -7,6 +7,13 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     clear_file();
+    thread=new QThread();
+    worker=new BackgroundWorker();
+    worker->moveToThread(thread);
+    thread->start();
+    connect(this,SIGNAL(start_searching_files(QString,QVector<QString>&)),worker,SLOT(search_files(QString,QVector<QString>&)),Qt::DirectConnection);
+    connect(worker,SIGNAL(error(QException,bool)),this,SLOT(got_error(QException,bool)));
+    connect(worker,SIGNAL(all_finished(bool)),this,SLOT(job_finished(bool)));
 }
 void MainWindow::clear_file()
 {
@@ -16,12 +23,32 @@ void MainWindow::clear_file()
 
 MainWindow::~MainWindow()
 {
+    thread->requestInterruption();
+    thread->quit();
+    thread->wait();;//quit worker
     delete ui;
+    delete worker;
+    delete thread;
 }
 void MainWindow::Video_file_update(QString filename)
 {
 
 }
+void MainWindow::video_finish_list_update(QString file_name)
+{
+
+}
+void MainWindow::got_error(QException e,bool isVideo)
+{
+    if(isVideo)
+    {
+        QString exception_content(e.what());
+        QMessageBox::information(this,"Error","Searching Files Failed:"+exception_content);
+        ui->lblNumber->setText("Searching Files Failed");
+        return;
+    }
+}
+
 void MainWindow::on_btnFile_clicked()
 {
     clear_file();
@@ -52,7 +79,20 @@ void MainWindow::on_rdbOneFolder_toggled(bool checked)
     conf.all_save=checked;
     qDebug()<<conf.all_save;
 }
-
+void MainWindow::job_finished(bool isVideo)
+{
+    if(!isVideo)
+    {
+        foreach(QString file,conf.file_to_work)
+        {
+            qDebug()<<file;
+        }
+        QString num=QString::number(conf.file_to_work.count());
+        ui->lblNumber->setText(num+" Files Selected");
+        QMessageBox::information(this,"Searching finished",num+" Files Selected");
+        return;
+    }
+}
 void MainWindow::on_btnFolder_clicked()
 {
     clear_file();
@@ -60,20 +100,18 @@ void MainWindow::on_btnFolder_clicked()
     qDebug()<<folder_path;
     if(folder_path.length()!=0)
     {
-        try {
-            ui->lblNumber->setText("Searching Files");
-            GetFile(folder_path,conf.file_to_work);
-        } catch (QException e) {
-            QMessageBox::information(this,"Error","Failed to search the path:"+folder_path);
-            ui->lblNumber->setText("Searching Files Failed");
-            return;
-        }
+//        try {
+//            ui->lblNumber->setText("Searching Files");
+//            GetFile(folder_path,conf.file_to_work);
+//        } catch (QException e) {
+//            QMessageBox::information(this,"Error","Failed to search the path:"+folder_path);
+//            ui->lblNumber->setText("Searching Files Failed");
+//            return;
+//        }
+        emit start_searching_files(folder_path,conf.file_to_work);
 
     }
-    foreach(QString file,conf.file_to_work)
-    {
-        qDebug()<<file;
-    }
+
 
 }
 
