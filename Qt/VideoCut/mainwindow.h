@@ -38,7 +38,7 @@ private slots:
 
     void on_btnStop_clicked();
     void job_finished(bool isVideo=false);
-    void video_finish_list_update(QString file_name);
+    void video_finish_list_update(QString error_log_path);
     void got_error(QException e,bool isVideo);
 
 private:

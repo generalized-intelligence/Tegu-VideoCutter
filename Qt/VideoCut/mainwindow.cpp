@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this,SIGNAL(start_searching_files(QString,QVector<QString>&)),worker,SLOT(search_files(QString,QVector<QString>&)),Qt::DirectConnection);
     connect(worker,SIGNAL(error(QException,bool)),this,SLOT(got_error(QException,bool)));
     connect(worker,SIGNAL(all_finished(bool)),this,SLOT(job_finished(bool)));
+    ui->textBrowser->append("Here shows the files finished cutting.\n");
 }
 void MainWindow::clear_file()
 {
@@ -32,19 +33,27 @@ MainWindow::~MainWindow()
 }
 void MainWindow::Video_file_update(QString filename)
 {
-
+    ui->textBrowser->append(filename+"\n");
 }
-void MainWindow::video_finish_list_update(QString file_name)
+void MainWindow::video_finish_list_update(QString error_log_path)
 {
-
+    if(error_log_path.length()!=0)
+    {
+        QMessageBox::information(this,"Finished","Cutting files Finished, some files failed to cut.\n "
+                                                 "Failed filename lists saved here:"+error_log_path);
+    }
+    else
+    {
+        QMessageBox::information(this,"Finished","All files cutting finished");
+    }
 }
 void MainWindow::got_error(QException e,bool isVideo)
 {
     if(isVideo)
     {
         QString exception_content(e.what());
-        QMessageBox::information(this,"Error","Searching Files Failed:"+exception_content);
-        ui->lblNumber->setText("Searching Files Failed");
+        QMessageBox::information(this,"Error","Searching files failed:"+exception_content);
+        ui->lblNumber->setText("Searching files failed");
         return;
     }
 }
@@ -89,7 +98,7 @@ void MainWindow::job_finished(bool isVideo)
         }
         QString num=QString::number(conf.file_to_work.count());
         ui->lblNumber->setText(num+" Files Selected");
-        QMessageBox::information(this,"Searching finished",num+" Files Selected");
+        QMessageBox::information(this,"Searching finished",num+" Files selected");
         return;
     }
 }
@@ -117,7 +126,13 @@ void MainWindow::on_btnFolder_clicked()
 
 void MainWindow::on_btnPath_clicked()
 {
-
+    QString folder_path=QFileDialog::getExistingDirectory (this, "Select the folder to open","./" );
+    //qDebug()<<folder_path;
+    if(folder_path.length()!=0)
+    {
+        conf.save_path=folder_path;
+        qDebug()<<folder_path;
+    }
 }
 
 

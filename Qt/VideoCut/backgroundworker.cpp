@@ -12,7 +12,10 @@ void BackgroundWorker::search_files(QString path,QVector<QString>& file_list)
 }
 void BackgroundWorker::cut_videos(QVector<QString>& filelist)
 {
+    foreach(QString video_file,filelist)
+    {
 
+    }
 }
 BackgroundWorker::BackgroundWorker()
 {
