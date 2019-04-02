@@ -22,7 +22,7 @@ public:
     QThread *working_thread;
     QVector<QString>err_list;
 public slots:
-    void cut_videos(QString save_path,QVector<QString> file_list,QVector<QString>&error_list,bool all_save,double freq);
+    void cut_videos(QString save_path,QVector<QString> file_list,bool all_save,double freq);
     void search_files(QString path,QVector<QString>& file_list);
 
 };

@@ -13,14 +13,16 @@ MainWindow::MainWindow(QWidget *parent) :
     worker->working_thread=thread;
     thread->start();
     connect(this,SIGNAL(start_searching_files(QString,QVector<QString>&)),worker,SLOT(search_files(QString,QVector<QString>&)),Qt::DirectConnection);
-    connect(worker,SIGNAL(error(QException,bool)),this,SLOT(got_error(QException,bool)));
+    connect(this,SIGNAL(start_cutting_videos(QString,QVector<QString>,bool,double)),worker,SLOT(cut_videos(QString,QVector<QString>,bool,double)),Qt::DirectConnection);
+    connect(worker,SIGNAL(error(QException,bool)),this,SLOT(got_error_searching_file(QException,bool)));
     connect(worker,SIGNAL(all_finished(bool,QString)),this,SLOT(job_finished(bool,QString)));
+    connect(worker,SIGNAL(one_video_file_finished(QString)),this,SLOT(Video_file_update(QString)));
+
     ui->textBrowser->append("Here shows the files finished cutting.\n");
 }
 void MainWindow::clear_file()
 {
     this->conf.file_to_work.clear();
-    this->conf.err_files.clear();
 }
 
 MainWindow::~MainWindow()
@@ -36,19 +38,8 @@ void MainWindow::Video_file_update(QString filename)
 {
     ui->textBrowser->append(filename+"\n");
 }
-void MainWindow::video_finish_list_update(QString error_log_path)
-{
-    if(error_log_path.length()!=0)
-    {
-        QMessageBox::information(this,"Finished","Cutting files Finished, some files failed to cut.\n "
-                                                 "Failed filename lists saved here:"+error_log_path);
-    }
-    else
-    {
-        QMessageBox::information(this,"Finished","All files cutting finished");
-    }
-}
-void MainWindow::got_error(QException e,bool isVideo)
+
+void MainWindow::got_error_searching_file(QException e,bool isVideo)
 {
     if(isVideo)
     {
@@ -89,7 +80,7 @@ void MainWindow::on_rdbOneFolder_toggled(bool checked)
     conf.all_save=checked;//true to save all pictures in one folder
     qDebug()<<conf.all_save;
 }
-void MainWindow::job_finished(bool isVideo)
+void MainWindow::job_finished(bool isVideo,QString error_log_path)
 {
     if(!isVideo)
     {
@@ -101,6 +92,18 @@ void MainWindow::job_finished(bool isVideo)
         ui->lblNumber->setText(num+" Files Selected");
         QMessageBox::information(this,"Searching finished",num+" Files selected");
         return;
+    }
+    else
+    {
+        if(error_log_path.length()!=0)
+        {
+            QMessageBox::information(this,"Finished","Cutting files Finished, some files failed to cut.\n "
+                                                     "Failed filename lists saved here:"+error_log_path);
+        }
+        else
+        {
+            QMessageBox::information(this,"Finished","All files cutting finished");
+        }
     }
 
 }
@@ -171,5 +174,5 @@ void MainWindow::on_rdb5_clicked()
 
 void MainWindow::on_btnStart_clicked()
 {
-    emit start_cutting_videos(conf.save_path,conf.file_to_work,conf.err_files,conf.all_save,conf.freq);
+    emit start_cutting_videos(conf.save_path,conf.file_to_work,conf.all_save,conf.freq);
 }

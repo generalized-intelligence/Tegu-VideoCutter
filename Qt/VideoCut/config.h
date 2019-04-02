@@ -12,7 +12,7 @@ struct config
     //false to create a folder for every video file
     QString save_path;//path to save
     QVector<QString>file_to_work;//file list for working
-    QVector<QString>err_files;//error files
+    //QVector<QString>err_files;//error files
 };
 
 #endif // CONFIG_H
