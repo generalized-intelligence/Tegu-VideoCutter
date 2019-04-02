@@ -10,10 +10,11 @@ MainWindow::MainWindow(QWidget *parent) :
     thread=new QThread();
     worker=new BackgroundWorker();
     worker->moveToThread(thread);
+    worker->working_thread=thread;
     thread->start();
     connect(this,SIGNAL(start_searching_files(QString,QVector<QString>&)),worker,SLOT(search_files(QString,QVector<QString>&)),Qt::DirectConnection);
     connect(worker,SIGNAL(error(QException,bool)),this,SLOT(got_error(QException,bool)));
-    connect(worker,SIGNAL(all_finished(bool)),this,SLOT(job_finished(bool)));
+    connect(worker,SIGNAL(all_finished(bool,QString)),this,SLOT(job_finished(bool,QString)));
     ui->textBrowser->append("Here shows the files finished cutting.\n");
 }
 void MainWindow::clear_file()
@@ -85,7 +86,7 @@ void MainWindow::on_btnFile_clicked()
 
 void MainWindow::on_rdbOneFolder_toggled(bool checked)
 {
-    conf.all_save=checked;
+    conf.all_save=checked;//true to save all pictures in one folder
     qDebug()<<conf.all_save;
 }
 void MainWindow::job_finished(bool isVideo)
@@ -101,6 +102,7 @@ void MainWindow::job_finished(bool isVideo)
         QMessageBox::information(this,"Searching finished",num+" Files selected");
         return;
     }
+
 }
 void MainWindow::on_btnFolder_clicked()
 {
@@ -138,5 +140,36 @@ void MainWindow::on_btnPath_clicked()
 
 void MainWindow::on_btnStop_clicked()
 {
+    thread->requestInterruption();
+}
 
+void MainWindow::on_rdb05_clicked()
+{
+    conf.freq=0.5;
+    qDebug()<<conf.freq;
+}
+
+void MainWindow::on_rdb1_clicked()
+{
+    conf.freq=1;
+    qDebug()<<conf.freq;
+}
+
+void MainWindow::on_rdb3_clicked()
+{
+    conf.freq=3;
+    qDebug()<<conf.freq;
+}
+
+
+void MainWindow::on_rdb5_clicked()
+{
+    conf.freq=5;
+    qDebug()<<conf.freq;
+}
+
+
+void MainWindow::on_btnStart_clicked()
+{
+    emit start_cutting_videos(conf.save_path,conf.file_to_work,conf.err_files,conf.all_save,conf.freq);
 }
