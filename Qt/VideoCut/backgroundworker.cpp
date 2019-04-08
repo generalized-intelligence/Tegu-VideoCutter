@@ -2,7 +2,7 @@
 #pragma execution_character_set("utf-8")
 #endif
 #include "backgroundworker.h"
-void BackgroundWorker::search_files(QString path,QVector<QString>& file_list)
+void BackgroundWorker::search_files(QString path,QVector<QString> *file_list)
 {
     try {
         GetFile(path,file_list);

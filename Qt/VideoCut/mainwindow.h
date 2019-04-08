@@ -12,6 +12,7 @@
 #include "backgroundworker.h"
 using std::shared_ptr;
 using std::make_shared;
+Q_DECLARE_METATYPE(QVector<QString>);
 namespace Ui {
 class MainWindow;
 }
@@ -20,7 +21,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 signals:
-    void start_searching_files(QString path,QVector<QString>& file_list);
+    void start_searching_files(QString path,QVector<QString> *file_list);
     void start_cutting_videos(QString save_path,QVector<QString> file_list,bool all_save,double freq);
 public:
     explicit MainWindow(QWidget *parent = nullptr);
@@ -47,6 +48,7 @@ private:
     Ui::MainWindow *ui;
     config conf;
     QThread *thread;
+    bool stopped=false;//judge if user clicked btnStop
     BackgroundWorker *worker;
 };
 

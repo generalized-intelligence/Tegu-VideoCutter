@@ -23,7 +23,7 @@ public:
     QVector<QString>err_list;
 public slots:
     void cut_videos(QString save_path,QVector<QString> file_list,bool all_save,double freq);
-    void search_files(QString path,QVector<QString>& file_list);
+    void search_files(QString path,QVector<QString> *file_list);
 
 };
 

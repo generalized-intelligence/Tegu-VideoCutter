@@ -1,6 +1,6 @@
 #include "helper.h"
 
-void GetFile(QString path,QVector<QString>& file_list)
+void GetFile(QString path,QVector<QString> *file_list)
 {
     QDir dir(path);
     foreach(QFileInfo mfi ,dir.entryInfoList())
@@ -11,7 +11,7 @@ void GetFile(QString path,QVector<QString>& file_list)
             qDebug()<< "File :" << full_name;
             if(full_name.endsWith(".avi")||full_name.endsWith(".mp4"))
             {
-                file_list.append(full_name);
+                file_list->append(full_name);
             }
         }else
         {
@@ -29,9 +29,11 @@ QString GetFilename(QString path)
 }
 bool VideoCut(QString video_path,QString save_path,double freq,QThread *worker,QVector<QString>&err_files)
 { //cut a single file
-    auto video_capture=cv::VideoCapture(video_path.toStdString());
+    VideoCaptureRAII raii(video_path);
+    cv::VideoCapture& video_capture=raii.capture;
     if(!video_capture.isOpened())
     {
+        qDebug()<<video_capture.isOpened();
         qDebug()<<"Failed to load video file:"+video_path;
         return false;
     }
@@ -62,12 +64,11 @@ bool VideoCut(QString video_path,QString save_path,double freq,QThread *worker,Q
         } catch (cv::Exception e) {
             qDebug()<<e.what();
             err_files.append(video_path);
-            video_capture.release();
+
             return false;
         }
 
 
     }
-    video_capture.release();
     return true;
 }
