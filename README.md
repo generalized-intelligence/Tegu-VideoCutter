@@ -3,20 +3,34 @@
 
 Tegu 视频切割工具（Tegu Video Cutter）是Tegu Core 的一个配套工具，用于为计算机视觉方向的深度学习模型提供标注数据。该工具能以可视化的形式，帮助用户方便快捷地为将视频文件按照指定的时间间隔切割成一系列图片文件，供Tegu 其他工具使用。该工具使用 C# + WinForm 开发，支持 .Net Framework 4.6.1，目前在中文版 Windows 10 1803 x64 平台下测试通过。
 
+基于Qt(C++)的新版本已经发布，即将提供跨平台支持。
+
 ---
 Tegu Video Cutter is a tool working with Tegu Core, it's used to provide data for deep learning models on computer vision. It can help users to cut video files into a series of image files in a fixed time interval, to be used by other Tegu tool series. The Tegu Video Cutter is developed by C# + WinForm, provides support of .Net Framework 4.6.1, tested in Simplified Chinese version of Windows 10 1803 x64 platform. 
 
+The new version based on Qt(C++) has released, cross-platform version will be provided soon.
 ## 快速开始(Fast Start)
 本项目提供了解决方案文件，安装 Visual Studio 2017 即可打开并运行。项目依赖于[OpenCVSharp](https://github.com/shimat/opencvsharp)，需要使用Nuget安装。
 
+
+新版本可以使用Qt Creator打开，也可以使用Visual Studio导入`*.pro`文件进行开发。项目基于OpenCV 3.4.5，已经附带了msvc14/15 x64库文件。若要在macOS下开发，请安装Homebrew，然后使用以下命令安装OpenCV：
+```sh
+brew install opencv@3
+```
+
 您也可以直接使用已经编译好的版本：
 [release](https://github.com/generalized-intelligence/Tegu-VideoCutter/releases)
-
 ---
 We have provided a solution file for you to open with Visual Studio 2017. The project depends on [OpenCVSharp](https://github.com/shimat/opencvsharp), which should be installed with Nuget.
 
+The new version can be opened with Qt Creator, you can also use Visual Studio to import `*.pro` file to develop. This project is based on OpenCV3.4.5, with msvc14/15 x64 binary lib included. If you want to develop on macOS, please install Homebrew and install OpenCV with the following command:
+```sh
+brew install opencv@3
+```
+
 You can also use the built executable version:
 [release](https://github.com/generalized-intelligence/Tegu-VideoCutter/releases)
+
 
 ## 现有功能(Functions available)
 
