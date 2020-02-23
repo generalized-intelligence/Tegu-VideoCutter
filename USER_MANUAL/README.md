@@ -7,6 +7,7 @@
 Tegu 视频切割工具（Tegu Video Cutter）是Tegu Core 的一个配套工具，用于为计算机视觉方向的深度学习模型提供标注数据。该工具能以可视化的形式，帮助用户方便快捷地为将视频文件按照指定的时间间隔切割成一系列图片文件，供Tegu 其他工具使用。该工具目前已在 Windows 10 1803 x64 平台测试通过，理论上可以直接在Linux和macOS平台上运行（未经测试）。
 
 本软件要求屏幕分辨率不小于 1024X768 。
+
 ---
 Tegu Video Cutter is a tool working with Tegu Core, it's used to provide data for deep learning models on computer vision. It can help users to cut video files into a series of image files in a fixed time interval, to be used by other Tegu tool series. 
 
@@ -35,21 +36,24 @@ The Tegu Video Cutter requires that your screen resolution is not smaller than 1
 
 ---
 When the Tegu Video Cutter launches, the main window shows as follow:
-//01 main
+![main](https://github.com/generalized-intelligence/Tegu-VideoCutter/blob/master/USER_MANUAL/images/01.png?raw=true)
 
 
 点击“选择文件”可以选择要切割的视频文件，支持`*.avi`和`*.mp4`格式。也可以点击“选择目录”选择一个文件夹，软件会递归地搜索文件夹中的所有视频文件。
+
 ---
 Click "Select File" to select the video file to cut, which supports the `*.avi` and `*.mp4` format. You can also click "Select Folder" to select a folder, the software will search recursively for all the video files in the folder.
 
-//02 open
+![open](https://github.com/generalized-intelligence/Tegu-VideoCutter/blob/master/USER_MANUAL/images/open.png?raw=true)
 右侧文本区域会显示当前已找到的视频文件。
+
 ---
 The text space rightside will show the video files found.
 
-//03 found
+![found](https://github.com/generalized-intelligence/Tegu-VideoCutter/blob/master/USER_MANUAL/images/found.png?raw=true)
 
 左侧界面可以选择切割图片的时间间隔，你可以选择每0.5s/1s/3s/5s切割一张图片。
+
 ---
 In the left area, you can select the frequency of video cutting, choose 0.5s/1s/3s/5s per image to cut.
 
@@ -67,11 +71,13 @@ Click "Select Save Path" to choose the path to save image files.You can choose h
 ---
 Click "Start Cutting" to start, if you want to stop, click "Cancel Cutting".
 
-//finished
+![finished](https://github.com/generalized-intelligence/Tegu-VideoCutter/blob/master/USER_MANUAL/images/finished.png?raw=true)
 
 生成文件如图所示：分别以两种保存方式保存。
+
 ---
+
 The picture files generated are showed as follow picture, saved in two modes:
-//save
+![save](https://github.com/generalized-intelligence/Tegu-VideoCutter/blob/master/USER_MANUAL/images/save.png?raw=true)
 
 
